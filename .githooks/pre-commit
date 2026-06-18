@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+FIXED=0
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.md$'); do
+  [ -f "$file" ] || continue
+  content=$(cat "$file")
+  new=$(echo "$content" | python3 -c "
+import sys, re
+content = sys.stdin.read()
+# Add blank line before # headings if missing
+result = re.sub(r'([^\n])\n(#{1,6} )', r'\1\n\n\2', content)
+sys.stdout.write(result)
+")
+  if [ "$content" != "$new" ]; then
+    echo "$new" > "$file"
+    git add "$file"
+    echo "  ✓ fixed heading spacing in $file"
+    FIXED=$((FIXED + 1))
+  fi
+done
+
+if [ $FIXED -gt 0 ]; then
+  echo "Auto-fixed $FIXED markdown file(s) — missing blank lines before headings were added"
+fi
