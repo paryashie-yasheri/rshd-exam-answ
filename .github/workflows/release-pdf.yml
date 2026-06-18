@@ -47,6 +47,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
-          name: BLPS Answers v${{ github.run_number }}
-          files: BLPS-answers.pdf
+          name: РСХД v${{ github.run_number }}
+          files: RSHD.pdf
           generate_release_notes: true
