@@ -35,7 +35,7 @@ jobs:
 
       - name: Build PDF
         run: |
-          pandoc README-processed.md -o BLPS-answers.pdf \
+          pandoc README-processed.md -o dbms-exam-answers.pdf \
             --pdf-engine=xelatex \
             -H .github/scripts/pdf-header.tex \
             -V mainfont='DejaVu Sans' \
@@ -48,5 +48,5 @@ jobs:
         with:
           tag_name: v${{ github.run_number }}
           name: РСХД v${{ github.run_number }}
-          files: RSHD.pdf
+          files: dbms-exam-answers.pdf
           generate_release_notes: true
